@@ -15,7 +15,7 @@ public class JavaLab5 {
 
     
     private static void quadraticEquation(){
-        System.out.println("Для квадратного уравнения вида a*х^2 + b*x + c = 0 введите целые числа a, b и c, каждое на отдельной строке или через пробел:");
+        System.out.println("Р”Р»СЏ РєРІР°РґСЂР°С‚РЅРѕРіРѕ СѓСЂР°РІРЅРµРЅРёСЏ РІРёРґР° a*С…^2 + b*x + c = 0 РІРІРµРґРёС‚Рµ С†РµР»С‹Рµ С‡РёСЃР»Р° a, b Рё c, РєР°Р¶РґРѕРµ РЅР° РѕС‚РґРµР»СЊРЅРѕР№ СЃС‚СЂРѕРєРµ РёР»Рё С‡РµСЂРµР· РїСЂРѕР±РµР»:");
         Scanner scanner = new Scanner(System.in);
         try{
             int a = scanner.nextInt();
@@ -24,20 +24,20 @@ public class JavaLab5 {
 
             int d = b*b-4*a*c;
             if(d < 0){
-                System.out.println("Уравнение не имеет корней!");
+                System.out.println("РЈСЂР°РІРЅРµРЅРёРµ РЅРµ РёРјРµРµС‚ РєРѕСЂРЅРµР№!");
             }
             else if(d == 0){
-                System.out.println("Уравнение имеет один корень!");
+                System.out.println("РЈСЂР°РІРЅРµРЅРёРµ РёРјРµРµС‚ РѕРґРёРЅ РєРѕСЂРµРЅСЊ!");
                 System.out.println("X = "+(-b/(2*a)));
             }
             else{
-                System.out.println("Уравнение имеет два корня!");
+                System.out.println("РЈСЂР°РІРЅРµРЅРёРµ РёРјРµРµС‚ РґРІР° РєРѕСЂРЅСЏ!");
                 System.out.println("X1 = "+(-b-Math.sqrt(d))/(2*a));
                 System.out.println("X2 = "+(-b+Math.sqrt(d))/(2*a));
             }
         }
         catch(InputMismatchException e){
-            System.out.println("Ошибка ввода! Недопустимое значение одной из переменных! Будьте внимательнее!");
+            System.out.println("РћС€РёР±РєР° РІРІРѕРґР°! РќРµРґРѕРїСѓСЃС‚РёРјРѕРµ Р·РЅР°С‡РµРЅРёРµ РѕРґРЅРѕР№ РёР· РїРµСЂРµРјРµРЅРЅС‹С…! Р‘СѓРґСЊС‚Рµ РІРЅРёРјР°С‚РµР»СЊРЅРµРµ!");
             quadraticEquation();
         }
     }
