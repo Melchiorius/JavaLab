@@ -10,32 +10,48 @@ public class Matrix {
     private int n;
     private int m;
 
-    double[][] values;
+    double[][] matrix;
 
     public Matrix(int n, int m) {
         this.n = n;
         this.m = m;
-        values = new double[n][m];
+        matrix = new double[n][m];
     }
 
-    public Matrix(double values[][]) {
-        this.n = values.length;
-        this.m = values[0].length;
-        this.values = values;
+    public Matrix(double matrix[][]) {
+        this.n = matrix.length;
+        int max = matrix[0].length;
+        boolean resize = false;
+        for(int i=0;i<this.n;i++){
+            max = max<matrix[i].length?matrix[i].length:max;
+            resize = true;
+        }
+        this.m = max;
+        if(resize){
+            this.matrix = new double[this.n][this.m];
+            for(int i=0;i<this.n;i++){
+                for(int j=0;j<matrix[i].length;j++){
+                    this.matrix[i][j] = matrix[i][j];
+                }
+            }
+        }
+        else {
+            this.matrix = matrix;
+        }
     }
 
-    public Matrix(double values[]) {
+    public Matrix(double vector[]) {
         this.n = 1;
-        this.m = values.length;
-        this.values = new double[1][m];
-        this.values[0] = values;
+        this.m = vector.length;
+        this.matrix = new double[1][m];
+        this.matrix[0] = vector;
     }
 
     public String toString(){
         String text = "";
         for(int i=0;i<this.n;i++){
             for(int j=0;j<this.m;j++){
-                String value = df.format(this.values[i][j]);
+                String value = df.format(this.matrix[i][j]);
                 if(value.equals("-0")){ value = "0"; }
                 text += value + "\t";
             }
@@ -49,15 +65,16 @@ public class Matrix {
     public Matrix fillRandom(int min, int max){
         for(int i=0;i<this.n;i++){
             for(int j=0;j<this.m;j++){
-                this.values[i][j] = (int)(min+Math.random()*(max-min));
+                this.matrix[i][j] = (int)(min+Math.random()*(max-min));
             }
         }
         return this;
     }
 
     public Matrix fillSingle(){
+        matrix = new double[this.n][this.m];
         for(int i=0;i<this.n;i++){
-            this.values[i][i] = 1;
+            this.matrix[i][i] = 1;
         }
         return this;
     }
@@ -66,24 +83,24 @@ public class Matrix {
         if(this.n <= n || this.m <= m){
             return false;
         }
-        values[n][m] = value;
+        matrix[n][m] = value;
         return true;
     }
 
-    public boolean setLine(int n, double[] values){
-        if(this.n <= n || values.length != this.m){
+    public boolean setLine(int n, double[] vector){
+        if(this.n <= n || vector.length != this.m){
             return false;
         }
-        this.values[n] = values.clone();
+        this.matrix[n] = vector.clone();
         return true;
     }
 
-    public boolean setColumn(int m, double[] values){
-        if(this.m <= m || values.length != this.n){
+    public boolean setColumn(int m, double[] vector){
+        if(this.m <= m || vector.length != this.n){
             return false;
         }
         for(int i=0;i<n;i++){
-            this.values[i][m] = values[i];
+            this.matrix[i][m] = vector[i];
         }
         return true;
     }
@@ -100,14 +117,14 @@ public class Matrix {
         if(this.n <= n || this.m <= m){
             return 0;
         }
-        return values[n][m];
+        return matrix[n][m];
     }
 
     public double[] getLine(int n){
         if(this.n <= n){
             return null;
         }
-        return values[n].clone();
+        return matrix[n].clone();
     }
 
     public double[] getColumn(int m){
@@ -116,7 +133,7 @@ public class Matrix {
         }
         double[] column = new double[this.n];
         for(int i=0;i<this.n;i++){
-            column[i] = values[i][m];
+            column[i] = matrix[i][m];
         }
         return column;
     }
@@ -176,14 +193,14 @@ public class Matrix {
     }
 
     private Matrix getMatrixOfAlgebraicAdditions(){
-        Matrix matrix = new Matrix(this.n,this.m);
+        Matrix result = new Matrix(this.n,this.m);
         for(int i=0;i<this.n;i++){
             for(int j=0;j<this.m;j++){
                 int mod = (i%2==0?1:-1)*((j)%2==0?1:-1);
-                matrix.setValue(i,j,mod*getMinorMatrix(i,j).getDeterminant());
+                result.setValue(i,j,mod*getMinorMatrix(i,j).getDeterminant());
             }
         }
-        return matrix;
+        return result;
     }
 
     private Matrix getMinorMatrix(int n,int m){
@@ -235,14 +252,14 @@ public class Matrix {
     }
 
     public double[] getEigenvalues(){
-        return new EigenDecomposition(MatrixUtils.createRealMatrix(values)).getRealEigenvalues();
+        return new EigenDecomposition(MatrixUtils.createRealMatrix(matrix)).getRealEigenvalues();
     }
 
     public double[][] getRealEigenVectors(){
-        return new EigenDecomposition(MatrixUtils.createRealMatrix(values)).getV().getData();
+        return new EigenDecomposition(MatrixUtils.createRealMatrix(matrix)).getV().getData();
     }
 
     public Matrix getEigenVectorsAsMatrix(){
-        return new Matrix(new EigenDecomposition(MatrixUtils.createRealMatrix(values)).getV().getData());
+        return new Matrix(getRealEigenVectors());
     }
 }
