@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?language javascript?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<!-- prefHeight="200.0" prefWidth="200.0" -->
+
+<VBox spacing="10" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.boost.MainSceneController">
+   <padding>
+      <Insets bottom="10" left="10" right="10" top="10" />
+   </padding>
+   <StackPane alignment="BOTTOM_CENTER">
+      <Button fx:id="startButton" onAction="#startButtonClicked" prefWidth="75.0" text="Start" />
+   </StackPane>
+
+   <HBox alignment="BOTTOM_CENTER" spacing="10">
+      <Label prefWidth="50.0" text="Batman" />
+      <ProgressBar fx:id="progressBarA" prefWidth="200.0" progress="0.0" />
+   </HBox>
+   <HBox alignment="BOTTOM_CENTER" spacing="10">
+      <Label prefWidth="50.0" text="Joker" />
+      <ProgressBar fx:id="progressBarB" prefWidth="200.0" progress="0.0" />
+   </HBox>
+   <LineChart fx:id="lineChart">
+     <xAxis>
+       <CategoryAxis side="BOTTOM" />
+     </xAxis>
+     <yAxis>
+       <NumberAxis side="LEFT" tickLabelGap="2.0" upperBound="1.0" />
+     </yAxis>
+   </LineChart>
+</VBox>
